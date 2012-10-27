@@ -1,6 +1,7 @@
 package ytel.pom.gui;
 
 import java.awt.Container;
+import java.awt.Panel;
 
 import javax.swing.JFrame;
 import javax.swing.JTabbedPane;
@@ -39,21 +40,22 @@ public class MainForm {
 		frame.setVisible(true);
 	}
 
-	public void SetConnectMode() {
+	public void setConnectMode() {
 		tab.setEnabledAt(0, true);
 		tab.setEnabledAt(1, false);
 		tab.setSelectedIndex(0);
 	}
-	public void SetGameMode() {
+	public void setGameMode(String budyHost) {
 		tab.setEnabledAt(0, false);
 		tab.setEnabledAt(1, true);
 		tab.setSelectedIndex(1);
+		mainControl.init(budyHost, mainPanel);
 	}
 
-	public void ShakeHandComplete() {
-		connectPanel.SetWaitingMode(false);
+	public void shakeHandComplete() {
+		connectPanel.setWaitingMode(false);
 	}
-	public void PingTimeout() {
-		connectPanel.SetWaitingMode(false);
+	public void pingTimeout() {
+		connectPanel.setWaitingMode(false);
 	}
 }

@@ -1,19 +1,18 @@
 package ytel.pom.control;
 
-import java.awt.Color;
 import java.awt.Graphics;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 import java.util.concurrent.CopyOnWriteArrayList;
 
+import ytel.pom.control.ModeManager.Mode;
+import ytel.pom.gui.main.MainPanel;
 import ytel.pom.gui.main.Pom;
 import ytel.pom.model.Damage;
 
 public class MainControlImpl implements MainControl {
 	private static final Random rnd = new Random(System.currentTimeMillis());
-
-	private static final Color[] ALL_COLOR = { Color.BLUE, Color.RED, Color.YELLOW, Color.GREEN };
 
 	private int fallingCountUp;
 	private int fallingSpeed = 10;
@@ -27,7 +26,11 @@ public class MainControlImpl implements MainControl {
 	public MainControlImpl(int pomSize) {
 		damages = new CopyOnWriteArrayList<Damage>();
 		poms = new Pom[WIDTH][HEIGHT];
-poms[4][5] = new Pom(Color.PINK);
+	}
+
+	@Override
+	public void init(String budyHost, MainPanel panel) {
+		panel.init(budyHost);
 	}
 
 	@Override

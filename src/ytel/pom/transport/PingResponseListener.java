@@ -1,6 +1,6 @@
 package ytel.pom.transport;
 
 public interface PingResponseListener {
-	void ResponseRecievedAction(String hoseName);
-	void PingTimeoutAction();
+	void responseRecievedAction(String hoseName);
+	void pingTimeoutAction();
 }

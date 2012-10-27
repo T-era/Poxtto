@@ -27,6 +27,7 @@ public class Pom {
 		case Erase3: return State.Fall1;
 		case Fall1: return State.Fall2;
 		case Fall2: return State.Fall3;
+		case Fall3: throw new IllegalStateException();
 		}
 		throw new IllegalStateException();
 	}
@@ -86,9 +87,9 @@ public class Pom {
 		return x / MainControl.POM_SIZE_W;
 	}
 	public int cordToDrawY(int cordY) {
-		return (MainControl.HEIGHT - cordY) * MainControl.POM_SIZE_H;
+		return ((MainControl.HEIGHT-1) - cordY) * MainControl.POM_SIZE_H;
 	}
 	public int drawToCordy(int y) {
-		return MainControl.HEIGHT - y / MainControl.POM_SIZE_W;
+		return (MainControl.HEIGHT-1) - y / MainControl.POM_SIZE_W;
 	}
 }

@@ -17,6 +17,12 @@ public class OverlayPanel extends JPanel {
 	}
 
 	@Override
+	public void paint(Graphics g) {
+		g.clearRect(0, 0, this.getSize().width, this.getSize().height);
+		super.paint(g);
+	}
+
+	@Override
 	protected void paintChildren(Graphics g) {
 		super.paintChildren(g);
 		drawing.paintOverlay(g, getSize());

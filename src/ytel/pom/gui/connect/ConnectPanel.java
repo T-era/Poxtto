@@ -31,7 +31,7 @@ public class ConnectPanel {
 		connectButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				SetWaitingMode(true);
+				setWaitingMode(true);
 				sh.put(inputIpHost.getText());
 			}
 		});
@@ -43,7 +43,7 @@ public class ConnectPanel {
 		builder.layoutComponent(panel);
 	}
 
-	public void SetWaitingMode(boolean waiting) {
+	public void setWaitingMode(boolean waiting) {
 		if (waiting) {
 			waitingOverlay.StartMotion();
 		} else {

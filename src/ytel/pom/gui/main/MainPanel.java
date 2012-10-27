@@ -7,11 +7,15 @@ import javax.swing.border.LineBorder;
 
 import ytel.pom.control.KeyDelegate;
 import ytel.pom.control.MainControl;
+import ytel.pom.control.ModeChangedListener;
+import ytel.pom.control.ModeManager;
+import ytel.pom.control.ModeManager.Mode;
 import ytel.pom.gui.parts.OverlayPanel;
 
 public class MainPanel {
 	public final OverlayPanel panel;
 	public final MainPanelOverlay overlay;
+	private final ModeManager modeManager;
 
 	public MainPanel(final MainControl control) {
 		panel = new OverlayPanel() {
@@ -25,7 +29,13 @@ public class MainPanel {
 				control.drawPoms(g);
 			}
 		};
-		overlay = new MainPanelOverlay();
+		this.modeManager = new ModeManager(new ModeChangedListener() {
+			@Override
+			public void modeChanged(Mode newMode) {
+				panel.repaint();
+			}
+		});
+		overlay = new MainPanelOverlay(modeManager);
 		panel.setOverlayDrawing(overlay);
 		panel.setFocusable(true);
 		KeyDelegate id = new KeyDelegate(control);
@@ -40,5 +50,9 @@ public class MainPanel {
 		panel.setMaximumSize(dim);
 		panel.setMinimumSize(dim);
 		panel.setBorder(new LineBorder(Color.BLUE, 5));
+	}
+
+	public void init(String budyHost) {
+		modeManager.init(budyHost);
 	}
 }

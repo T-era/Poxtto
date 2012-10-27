@@ -12,27 +12,27 @@ public class MenuControlImpl implements MenuControl {
 	@Override
 	public void start() {
 		mainForm.init(this);
-		mainForm.SetConnectMode();
+		mainForm.setConnectMode();
 	}
 
 	@Override
-	public void ShakeHandCompleteAction(String hostName) {
-		ShakeHandDone();
+	public void shakeHandCompleteAction(String hostName) {
+		shakeHandDone(hostName);
 	}
 
 	@Override
-	public void ResponseRecievedAction(String hoseName) {
-		ShakeHandDone();
+	public void responseRecievedAction(String hostName) {
+		shakeHandDone(hostName);
 	}
 
-	private void ShakeHandDone() {
-		mainForm.ShakeHandComplete();
-		mainForm.SetGameMode();
+	private void shakeHandDone(String hostName) {
+		mainForm.shakeHandComplete();
+		mainForm.setGameMode(hostName);
 	}
 
 	@Override
-	public void PingTimeoutAction() {
-		mainForm.PingTimeout();
+	public void pingTimeoutAction() {
+		mainForm.pingTimeout();
 	}
 
 public static void main(String[] args) {

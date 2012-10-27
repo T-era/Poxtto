@@ -10,8 +10,8 @@ import ytel.pom.transport.Ping;
 import ytel.pom.transport.TransportConsts;
 
 /**
- *
- * @author 22677478
+ * 
+ * @author y-tel
  *
  * TODO PING 発信後、レスポンス受信前に、別のPINGを受信した場合、両方に良い返事を返してしまうバグ。
  */
@@ -28,10 +28,18 @@ public class ShakeHand implements Runnable {
 		new Thread(this).start();
 	}
 
+	/**
+	 * PING 発信
+	 * @param host
+	 */
 	public void put(String host) {
-		new Thread(new Ping(host, port, TransportConsts.PING_SO_TIMEOUT, listener)).start();
+		new Thread(new Ping(host, port, TransportConsts.PING_MESSAGE, TransportConsts.PING_MESSAGE, TransportConsts.PING_SO_TIMEOUT, listener)).start();
 	}
 
+	/**
+	 * 返信用サービス
+	 * @param host
+	 */
 	public void run() {
 		try {
 			ServerSocket server = new ServerSocket(port);
@@ -45,7 +53,7 @@ public class ShakeHand implements Runnable {
 
 						output.write(TransportConsts.PING_MESSAGE);
 						output.flush();
-						listener.ShakeHandCompleteAction(socket.getInetAddress().getHostName());
+						listener.shakeHandCompleteAction(socket.getInetAddress().getHostName());
 					}
 					} finally {
 						socket.close();
@@ -59,5 +67,7 @@ public class ShakeHand implements Runnable {
 			throw new RuntimeException(ex);
 		}
 	}
-
+	public void stopServer() {
+		stopped = true;
+	}
 }
