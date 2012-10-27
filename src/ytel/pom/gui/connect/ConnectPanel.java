@@ -24,7 +24,7 @@ public class ConnectPanel {
 		waitingOverlay= new WaitingOverlay(panel);
 		panel.setOverlayDrawing(waitingOverlay);
 
-		inputIpHost = new JTextField();
+		inputIpHost = new JTextField("localhost");
 		JButton connectButton = new JButton("Connect");
 
 		final ShakeHand sh = new ShakeHand(control);
@@ -42,11 +42,6 @@ public class ConnectPanel {
 		builder.add(connectButton, BorderLayoutBuilder.Direction.South, BorderLayoutBuilder.Direction.East);
 		builder.layoutComponent(panel);
 	}
-
-//	@Override
-//	public void ShakeHandCompleteAction(String hostName) {
-//		SetWaitingMode(false);
-//	}
 
 	public void SetWaitingMode(boolean waiting) {
 		if (waiting) {

@@ -3,6 +3,8 @@ package ytel.pom.gui.main;
 import java.awt.Color;
 import java.awt.Graphics;
 
+import ytel.pom.control.MainControl;
+
 public class Pom {
 	private final Color c;
 	private State state;
@@ -28,10 +30,40 @@ public class Pom {
 		}
 		throw new IllegalStateException();
 	}
-	public void draw(Graphics g, int x, int y, int pomSizeW, int pomSizeH) {
+	
+	public void draw(Graphics g, int cordX, int cordY) {
+		if (cordY < MainControl.HEIGHT)
+		{
+			int y = cordToDrawY(cordY) + (int)(MainControl.POM_SIZE_H * state.down);
+			int x = cordToDrawX(cordX);
+			drawImpl(g, x, y);
+		}
+	}
+	
+	private static final int EYE_WHITE = 11;
+	private static final int EYE_BLACK = 7;
+	private void drawImpl(Graphics g, int x, int y) {
 		g.setColor(c);
-		int drawY = y + (int)(pomSizeH * state.down);
-		g.fillOval(x, drawY, pomSizeW, pomSizeH);
+		g.fillOval(x, y, MainControl.POM_SIZE_W, MainControl.POM_SIZE_H);
+		int eye1X = x + (MainControl.POM_SIZE_W) / 4;
+		int eye2X = x + (MainControl.POM_SIZE_W) * 3 / 4;
+		int eyeY = y + (MainControl.POM_SIZE_H) * 2 / 5;
+		g.setColor(Color.WHITE);
+		g.fillOval(eye1X - EYE_WHITE/2, eyeY-EYE_WHITE/2, EYE_WHITE, EYE_WHITE);
+		g.fillOval(eye2X - EYE_WHITE/2, eyeY-EYE_WHITE/2, EYE_WHITE, EYE_WHITE);
+		g.setColor(Color.BLACK);
+		g.fillOval(eye1X - EYE_BLACK/2, eyeY-EYE_BLACK/2, EYE_BLACK, EYE_BLACK);
+		g.fillOval(eye2X - EYE_BLACK/2, eyeY-EYE_BLACK/2, EYE_BLACK, EYE_BLACK);
+	}
+	
+	/**
+	 * 
+	 * @param g
+	 * @param x 描画座標
+	 * @param y 描画座標 (Falling Pair は論理座標系より細かい制御だから。)
+	 */
+	public void drawFalling(Graphics g, int x, int y) {
+		drawImpl(g, x, y);
 	}
 
 	public static enum State {
@@ -46,5 +78,17 @@ public class Pom {
 		private State(double down) {
 			this.down = down;
 		}
+	}
+	public int cordToDrawX(int cordX) {
+		return cordX * MainControl.POM_SIZE_W;
+	}
+	public int drawToCordX(int x) {
+		return x / MainControl.POM_SIZE_W;
+	}
+	public int cordToDrawY(int cordY) {
+		return (MainControl.HEIGHT - cordY) * MainControl.POM_SIZE_H;
+	}
+	public int drawToCordy(int y) {
+		return MainControl.HEIGHT - y / MainControl.POM_SIZE_W;
 	}
 }

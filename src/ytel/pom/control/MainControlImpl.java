@@ -27,7 +27,7 @@ public class MainControlImpl implements MainControl {
 	public MainControlImpl(int pomSize) {
 		damages = new CopyOnWriteArrayList<Damage>();
 		poms = new Pom[WIDTH][HEIGHT];
-		poms[6][5] = new Pom(Color.PINK);
+poms[4][5] = new Pom(Color.PINK);
 	}
 
 	@Override
@@ -91,11 +91,11 @@ public class MainControlImpl implements MainControl {
 
 	@Override
 	public void drawPoms(Graphics g) {
-		for (int x = 0; x < WIDTH; x ++) {
-			for (int y = 0; y < HEIGHT; y ++) {
-				Pom p = poms[x][y];
+		for (int cordX = 0; cordX < WIDTH; cordX ++) {
+			for (int cordY = 0; cordY < HEIGHT; cordY ++) {
+				Pom p = poms[cordX][cordY];
 				if (p != null) {
-					p.draw(g, x, y, POM_SIZE_W, POM_SIZE_H);
+					p.draw(g, cordX, cordY);
 				}
 			}
 		}
@@ -164,8 +164,8 @@ public class MainControlImpl implements MainControl {
 		}
 
 		public void drawPair(Graphics g) {
-			p1.draw(g, cordX * POM_SIZE_W, y - POM_SIZE_H, POM_SIZE_W, POM_SIZE_H);
-			p2.draw(g, cordX * POM_SIZE_W, y, POM_SIZE_W, POM_SIZE_H);
+			p1.drawFalling(g, cordX * POM_SIZE_W, y - POM_SIZE_H);
+			p2.drawFalling(g, cordX * POM_SIZE_W, y);
 		}
 	}
 }
