@@ -17,6 +17,15 @@ public class MenuControlImpl implements MenuControl {
 
 	@Override
 	public void ShakeHandCompleteAction(String hostName) {
+		ShakeHandDone();
+	}
+
+	@Override
+	public void ResponseRecievedAction(String hoseName) {
+		ShakeHandDone();
+	}
+
+	private void ShakeHandDone() {
 		mainForm.ShakeHandComplete();
 		mainForm.SetGameMode();
 	}

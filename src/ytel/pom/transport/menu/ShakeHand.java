@@ -1,10 +1,13 @@
-package ytel.pom.transport;
+package ytel.pom.transport.menu;
 
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.ServerSocket;
 import java.net.Socket;
+
+import ytel.pom.transport.Ping;
+import ytel.pom.transport.TransportConsts;
 
 /**
  *
@@ -18,7 +21,7 @@ public class ShakeHand implements Runnable {
 	private final ShakeHandCompleteListener listener;
 
 	public ShakeHand(ShakeHandCompleteListener listener) {
-		this.port = Port.PING_PORT;
+		this.port = TransportConsts.PING_PORT;
 		this.listener = listener;
 
 		stopped = false;
@@ -26,7 +29,7 @@ public class ShakeHand implements Runnable {
 	}
 
 	public void put(String host) {
-		new Thread(new Ping(host, port, listener)).start();
+		new Thread(new Ping(host, port, TransportConsts.PING_SO_TIMEOUT, listener)).start();
 	}
 
 	public void run() {
@@ -37,10 +40,10 @@ public class ShakeHand implements Runnable {
 					Socket socket = server.accept();
 					try {
 					InputStream input = socket.getInputStream();
-					if (input.read() == Port.PING_MESSAGE) {
+					if (input.read() == TransportConsts.PING_MESSAGE) {
 						OutputStream output = socket.getOutputStream();
 
-						output.write(Port.PING_MESSAGE);
+						output.write(TransportConsts.PING_MESSAGE);
 						output.flush();
 						listener.ShakeHandCompleteAction(socket.getInetAddress().getHostName());
 					}

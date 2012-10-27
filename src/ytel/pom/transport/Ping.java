@@ -8,11 +8,13 @@ import java.net.Socket;
 public class Ping implements Runnable {
 	public final String host;
 	public final int port;
-	private final ShakeHandCompleteListener listener;
+	private final int timeout;
+	private final PingResponseListener listener;
 
-	public Ping(String host, int port, ShakeHandCompleteListener listener) {
+	public Ping(String host, int port, int timeout, PingResponseListener listener) {
 		this.host = host;
 		this.port = port;
+		this.timeout = timeout;
 		this.listener = listener;
 	}
 
@@ -20,14 +22,14 @@ public class Ping implements Runnable {
 		try {
 			Socket pingSocket = new Socket(host, port);
 			OutputStream stream = pingSocket.getOutputStream();
-			pingSocket.setSoTimeout(Port.PING_SO_TIMEOUT);
-			stream.write(Port.PING_MESSAGE);
+			pingSocket.setSoTimeout(timeout);
+			stream.write(TransportConsts.PING_MESSAGE);
 			stream.flush();
 
 			InputStream input = pingSocket.getInputStream();
 			int ret = input.read();
-			if (ret == Port.PING_MESSAGE) {
-				listener.ShakeHandCompleteAction(host);
+			if (ret == TransportConsts.PING_MESSAGE) {
+				listener.ResponseRecievedAction(host);
 			}
 			pingSocket.close();
 		} catch (IOException ex) {

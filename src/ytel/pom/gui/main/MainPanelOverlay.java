@@ -2,14 +2,13 @@ package ytel.pom.gui.main;
 
 import java.awt.Dimension;
 import java.awt.Graphics;
-import java.awt.event.ActionEvent;
-
-import javax.swing.AbstractAction;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 import ytel.pom.gui.parts.OverlayDrawing;
 
 public class MainPanelOverlay implements OverlayDrawing {
-	private final ModeManager mode;
+	public final ModeManager mode;
 	private final OverlayDrawing startView;
 	private final OverlayDrawing doneView;
 	private final OverlayDrawing shiftView;
@@ -17,13 +16,7 @@ public class MainPanelOverlay implements OverlayDrawing {
 
 	public MainPanelOverlay() {
 		mode = new ModeManager();
-		startView  = new StartView(new AbstractAction("Start !") {
-			@Override
-			public void actionPerformed(ActionEvent arg0) {
-				// TODO Auto-generated method stub
-				
-			}
-		});
+		startView  = new StartView();
 		doneView = null;
 		shiftView = null;
 	}
@@ -60,7 +53,7 @@ public class MainPanelOverlay implements OverlayDrawing {
 		mode.reset();
 	}
 
-	private class ModeManager {
+	private class ModeManager extends MouseAdapter {
 		private Mode mode = Mode.Init;
 		private boolean budyReady = false;
 
@@ -86,6 +79,15 @@ public class MainPanelOverlay implements OverlayDrawing {
 		void reset() {
 			mode = Mode.Init;
 			budyReady = false;
+		}
+
+		@Override
+		public void mouseClicked(MouseEvent e) {
+			if (e.getButton() == MouseEvent.BUTTON1) {
+				if (mode == Mode.Init) {
+					start();
+				}
+			}
 		}
 	}
 

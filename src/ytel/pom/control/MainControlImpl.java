@@ -15,13 +15,9 @@ public class MainControlImpl implements MainControl {
 
 	private static final Color[] ALL_COLOR = { Color.BLUE, Color.RED, Color.YELLOW, Color.GREEN };
 
-	public static final int WIDTH = 7;
-	public static final int HEIGHT = 12;
-
 	private int fallingCountUp;
 	private int fallingSpeed = 10;
 
-	private final int pomSize;
 	private final CopyOnWriteArrayList<Damage> damages;
 
 	private MainControlEvent eventOn = null;
@@ -29,9 +25,9 @@ public class MainControlImpl implements MainControl {
 	private FallingPair fallingPair;
 
 	public MainControlImpl(int pomSize) {
-		this.pomSize = pomSize;
 		damages = new CopyOnWriteArrayList<Damage>();
 		poms = new Pom[WIDTH][HEIGHT];
+		poms[6][5] = new Pom(Color.PINK);
 	}
 
 	@Override
@@ -99,7 +95,7 @@ public class MainControlImpl implements MainControl {
 			for (int y = 0; y < HEIGHT; y ++) {
 				Pom p = poms[x][y];
 				if (p != null) {
-					p.draw(g, x, y, pomSize);
+					p.draw(g, x, y, POM_SIZE_W, POM_SIZE_H);
 				}
 			}
 		}
@@ -114,8 +110,8 @@ public class MainControlImpl implements MainControl {
 			damages.clear();
 		}
 		eventOn = new MainControlEvent(poms, list);
-		poms[fallingPair.cordX][fallingPair.y / pomSize] = fallingPair.p2;
-		poms[fallingPair.cordX][fallingPair.y / pomSize - 1] = fallingPair.p1;
+		poms[fallingPair.cordX][fallingPair.y / POM_SIZE_H] = fallingPair.p2;
+		poms[fallingPair.cordX][fallingPair.y / POM_SIZE_H - 1] = fallingPair.p1;
 
 		fallingPair = new FallingPair(WIDTH /2);
 	}
@@ -132,27 +128,27 @@ public class MainControlImpl implements MainControl {
 			int code2 = rnd.nextInt(ALL_COLOR.length - 1);
 			if (code2 == code1) code2 ++;
 
-			this.cordX = x * pomSize;
+			this.cordX = x * POM_SIZE_W;
 			this.p1 = new Pom(ALL_COLOR[code1]);
 			this.p2 = new Pom(ALL_COLOR[code2]);
 		}
 
 		public void MoveLeft() {
-			int cordY = y / pomSize;
-			if (cordX > pomSize
+			int cordY = y / POM_SIZE_H;
+			if (cordX > POM_SIZE_W
 					&& poms[cordX - 1][cordY] == null) {
-				cordX -= pomSize;
+				cordX -= POM_SIZE_W;
 			}
 		}
 		public void MoveRiht() {
-			int cordY = y / pomSize;
-			if ((cordX + 1) * pomSize > pomSize * WIDTH
+			int cordY = y / POM_SIZE_H;
+			if ((cordX + 1) * POM_SIZE_W > POM_SIZE_W * WIDTH
 					&& poms[cordX + 1][cordY] == null) {
-				cordX += pomSize;
+				cordX += POM_SIZE_W;
 			}
 		}
 		public boolean MoveDown() {
-			int cordY = (y + 1) / pomSize;
+			int cordY = (y + 1) / POM_SIZE_H;
 			if (cordY == HEIGHT - 1
 					|| poms[cordX][cordY] != null) {
 				return true;
@@ -168,8 +164,8 @@ public class MainControlImpl implements MainControl {
 		}
 
 		public void drawPair(Graphics g) {
-			p1.draw(g, cordX * pomSize, y - pomSize, pomSize);
-			p2.draw(g, cordX * pomSize, y, pomSize);
+			p1.draw(g, cordX * POM_SIZE_W, y - POM_SIZE_H, POM_SIZE_W, POM_SIZE_H);
+			p2.draw(g, cordX * POM_SIZE_W, y, POM_SIZE_W, POM_SIZE_H);
 		}
 	}
 }

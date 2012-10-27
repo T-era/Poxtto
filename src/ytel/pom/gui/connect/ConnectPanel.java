@@ -9,8 +9,8 @@ import javax.swing.JTextField;
 
 import ytel.pom.gui.parts.OverlayPanel;
 import ytel.pom.gui.parts.WaitingOverlay;
-import ytel.pom.transport.ShakeHand;
-import ytel.pom.transport.ShakeHandCompleteListener;
+import ytel.pom.transport.menu.ShakeHand;
+import ytel.pom.transport.menu.ShakeHandCompleteListener;
 import ytel.view.BorderLayoutBuilder;
 
 public class ConnectPanel {

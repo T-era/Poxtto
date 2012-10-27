@@ -28,10 +28,10 @@ public class Pom {
 		}
 		throw new IllegalStateException();
 	}
-	public void draw(Graphics g, int x, int y, int pomSize) {
+	public void draw(Graphics g, int x, int y, int pomSizeW, int pomSizeH) {
 		g.setColor(c);
-		int drawY = y + (int)(pomSize * state.down);
-		g.fillOval(x, drawY, pomSize, pomSize);
+		int drawY = y + (int)(pomSizeH * state.down);
+		g.fillOval(x, drawY, pomSizeW, pomSizeH);
 	}
 
 	public static enum State {

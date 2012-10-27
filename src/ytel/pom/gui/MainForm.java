@@ -3,14 +3,13 @@ package ytel.pom.gui;
 import java.awt.Container;
 
 import javax.swing.JFrame;
-import javax.swing.JLabel;
 import javax.swing.JTabbedPane;
 
 import ytel.pom.control.MainControl;
 import ytel.pom.control.MainControlImpl;
 import ytel.pom.gui.connect.ConnectPanel;
 import ytel.pom.gui.main.MainPanel;
-import ytel.pom.transport.ShakeHandCompleteListener;
+import ytel.pom.transport.menu.ShakeHandCompleteListener;
 
 public class MainForm {
 	private static final int POM_SIZE = 20;
@@ -18,6 +17,7 @@ public class MainForm {
 	private ConnectPanel connectPanel;
 	private MainPanel mainPanel;
 	private MainControl mainControl;
+
 	public MainForm() {
 //		Init();
 		//test2();
@@ -31,7 +31,7 @@ public class MainForm {
 		mainControl = new MainControlImpl(POM_SIZE);
 		mainPanel = new MainPanel(mainControl);
 		tab.addTab("接続", connectPanel.panel);
-		tab.addTab("test", mainPanel.panel);
+		tab.addTab("ゲーム", mainPanel.panel);
 
 		con.add(tab);
 

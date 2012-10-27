@@ -30,6 +30,4 @@ public class KeyDelegate implements KeyListener {
 	public void keyReleased(KeyEvent e) {
 		if (e.getKeyCode() == KeyEvent.VK_SHIFT) shiftPushed = false;
 	}
-
-
 }
