@@ -9,6 +9,10 @@ import java.util.TimerTask;
 import javax.swing.JPanel;
 
 public class WaitingPanel extends JPanel {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 5796358791494073998L;
 	private MyTimerTask timerTask = new MyTimerTask();
 	private static final String[] VIEW = {".", "..", "..."};
 

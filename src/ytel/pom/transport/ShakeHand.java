@@ -3,53 +3,46 @@ package ytel.pom.transport;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
-import java.net.InetAddress;
 import java.net.ServerSocket;
 import java.net.Socket;
 
+/**
+ *
+ * @author 22677478
+ *
+ * TODO PING 発信後、レスポンス受信前に、別のPINGを受信した場合、両方に良い返事を返してしまうバグ。
+ */
 public class ShakeHand implements Runnable {
-	public final String host;
 	public final int port;
-	public boolean stopped;
+	private boolean stopped;
+	private final ShakeHandCompleteListener listener;
 
-	public ShakeHand(String host) {
-		this.host = host;
+	public ShakeHand(ShakeHandCompleteListener listener) {
 		this.port = Port.PING_PORT;
+		this.listener = listener;
 
 		stopped = false;
 		new Thread(this).start();
 	}
 
-	public boolean put() {
-		try {
-			Socket pingSocket = new Socket(host, port);
-			OutputStream stream = pingSocket.getOutputStream();
-			pingSocket.setSoTimeout(Port.PING_SO_TIMEOUT);
-			stream.write(Port.PING_MESSAGE);
-			stream.flush();
-
-			InputStream input = pingSocket.getInputStream();
-			int ret = input.read();
-			pingSocket.close();
-			return ret == Port.PING_MESSAGE;
-		} catch (IOException ex) {
-			return false;
-		}
+	public void put(String host) {
+		new Thread(new Ping(host, port, listener)).start();
 	}
 
 	public void run() {
 		try {
-			ServerSocket listener = new ServerSocket(port);
+			ServerSocket server = new ServerSocket(port);
 			try {
 				do {
-					Socket socket = listener.accept();
+					Socket socket = server.accept();
 					try {
 					InputStream input = socket.getInputStream();
-					if (input.read() == Port.PING_MESSAGE
-							&& socket.getInetAddress().equals(InetAddress.getByName(host))) {
+					if (input.read() == Port.PING_MESSAGE) {
 						OutputStream output = socket.getOutputStream();
+
 						output.write(Port.PING_MESSAGE);
 						output.flush();
+						listener.ShakeHandCompleteAction(socket.getInetAddress().getHostName());
 					}
 					} finally {
 						socket.close();
@@ -57,7 +50,7 @@ public class ShakeHand implements Runnable {
 				} while(!stopped);
 			} finally {
 				stopped = true;
-				listener.close();
+				server.close();
 			}
 		} catch (IOException ex) {
 			throw new RuntimeException(ex);

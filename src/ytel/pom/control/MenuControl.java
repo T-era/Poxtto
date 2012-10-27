@@ -1,5 +1,7 @@
 package ytel.pom.control;
 
-public interface MenuControl {
-	void SetBudyHost(String host);
+import ytel.pom.transport.ShakeHandCompleteListener;
+
+public interface MenuControl extends ShakeHandCompleteListener {
+	void start();
 }

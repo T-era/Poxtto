@@ -3,23 +3,20 @@ package ytel.pom.transport;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
-import java.net.ServerSocket;
 import java.net.Socket;
 
 public class Ping implements Runnable {
 	public final String host;
 	public final int port;
-	public boolean stopped;
+	private final ShakeHandCompleteListener listener;
 
-	public Ping(String host) {
+	public Ping(String host, int port, ShakeHandCompleteListener listener) {
 		this.host = host;
-		this.port = Port.PING_PORT;
-
-		stopped = false;
-		new Thread(this).start();
+		this.port = port;
+		this.listener = listener;
 	}
 
-	public boolean put() {
+	public void run() {
 		try {
 			Socket pingSocket = new Socket(host, port);
 			OutputStream stream = pingSocket.getOutputStream();
@@ -29,36 +26,12 @@ public class Ping implements Runnable {
 
 			InputStream input = pingSocket.getInputStream();
 			int ret = input.read();
-			pingSocket.close();
-			return ret == Port.PING_MESSAGE;
-		} catch (IOException ex) {
-			return false;
-		}
-	}
-
-	public void run() {
-		try {
-			ServerSocket listener = new ServerSocket(port);
-			try {
-				do {
-					Socket socket = listener.accept();
-					try {
-					InputStream input = socket.getInputStream();
-					if (input.read() == Port.PING_MESSAGE) {
-						OutputStream output = socket.getOutputStream();
-						output.write(Port.PING_MESSAGE);
-						output.flush();
-					}
-					} finally {
-						socket.close();
-					}
-				} while(!stopped);
-			} finally {
-				stopped = true;
-				listener.close();
+			if (ret == Port.PING_MESSAGE) {
+				listener.ShakeHandCompleteAction(host);
 			}
+			pingSocket.close();
 		} catch (IOException ex) {
-			throw new RuntimeException(ex);
+			listener.PingTimeoutAction();
 		}
 	}
 }
