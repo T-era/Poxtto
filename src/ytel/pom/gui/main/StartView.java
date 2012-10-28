@@ -11,15 +11,17 @@ import ytel.pom.gui.parts.OverlayDrawing;
 
 public class StartView implements OverlayDrawing {
 	private static final String START_MESSAGE = "Click anywhere to start!";
-	private static final Color MASK = new Color(128,0,0,64);
+	private static final Color MASK = new Color(0,0,0,64);
 
 	@Override
 	public void paintOverlay(Graphics g, Dimension size) {
 		g.setColor(MASK);
 		g.fillRect(0,0, size.width, size.height);
-		g.setColor(Color.BLACK);
+		g.setColor(Color.WHITE);
 		Font f = g.getFont();
-		Rectangle2D rect = f.getStringBounds(START_MESSAGE, ((Graphics2D)g).getFontRenderContext());
+		Font font = new Font(f.getName(), Font.BOLD, f.getSize() + 4);
+		g.setFont(font);
+		Rectangle2D rect = font.getStringBounds(START_MESSAGE, ((Graphics2D)g).getFontRenderContext());
 		int x = size.width / 2 - (int)rect.getWidth()/ 2;
 		int y = size.height / 2 + (int)rect.getHeight()/4;
 

@@ -1,7 +1,6 @@
 package ytel.pom.gui;
 
 import java.awt.Container;
-import java.awt.Panel;
 
 import javax.swing.JFrame;
 import javax.swing.JTabbedPane;
@@ -13,7 +12,6 @@ import ytel.pom.gui.main.MainPanel;
 import ytel.pom.transport.menu.ShakeHandCompleteListener;
 
 public class MainForm {
-	private static final int POM_SIZE = 20;
 	private final JTabbedPane tab = new JTabbedPane();
 	private ConnectPanel connectPanel;
 	private MainPanel mainPanel;
@@ -29,10 +27,10 @@ public class MainForm {
 		Container con = frame.getContentPane();
 
 		connectPanel = new ConnectPanel(listener);
-		mainControl = new MainControlImpl(POM_SIZE);
+		mainControl = new MainControlImpl();
 		mainPanel = new MainPanel(mainControl);
 		tab.addTab("接続", connectPanel.panel);
-		tab.addTab("ゲーム", mainPanel.panel);
+		tab.addTab("ゲーム", mainPanel.border);
 
 		con.add(tab);
 

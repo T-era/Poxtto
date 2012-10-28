@@ -6,7 +6,6 @@ import java.util.List;
 import java.util.Random;
 import java.util.concurrent.CopyOnWriteArrayList;
 
-import ytel.pom.control.ModeManager.Mode;
 import ytel.pom.gui.main.MainPanel;
 import ytel.pom.gui.main.Pom;
 import ytel.pom.model.Damage;
@@ -23,7 +22,7 @@ public class MainControlImpl implements MainControl {
 	private Pom[][] poms;
 	private FallingPair fallingPair;
 
-	public MainControlImpl(int pomSize) {
+	public MainControlImpl() {
 		damages = new CopyOnWriteArrayList<Damage>();
 		poms = new Pom[WIDTH][HEIGHT];
 	}

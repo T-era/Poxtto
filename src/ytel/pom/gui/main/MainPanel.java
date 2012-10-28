@@ -1,8 +1,12 @@
 package ytel.pom.gui.main;
 
+import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.Graphics;
 
+import javax.swing.JComponent;
+import javax.swing.JPanel;
 import javax.swing.border.LineBorder;
 
 import ytel.pom.control.KeyDelegate;
@@ -13,11 +17,17 @@ import ytel.pom.control.ModeManager.Mode;
 import ytel.pom.gui.parts.OverlayPanel;
 
 public class MainPanel {
-	public final OverlayPanel panel;
-	public final MainPanelOverlay overlay;
+	private static final Color COLOR1 = new Color(60,30,30,255);
+	private static final Color COLOR2 = new Color(80,40,40,255);
+	private final OverlayPanel panel;
 	private final ModeManager modeManager;
+	public final JComponent border;
+	public final MainPanelOverlay overlay;
 
 	public MainPanel(final MainControl control) {
+		border = new JPanel(new BorderLayout());
+		border.setBorder(new LineBorder(Color.BLUE, 3));
+
 		panel = new OverlayPanel() {
 			/**
 			 * 
@@ -25,7 +35,17 @@ public class MainPanel {
 			private static final long serialVersionUID = 3666870835986288160L;
 
 			@Override
-			protected void paintComponent(java.awt.Graphics g) {
+			protected void paintComponent(Graphics g) {
+				for (int x = 0; x < MainControl.WIDTH; x ++) {
+					for (int y = 0; y < MainControl.HEIGHT; y ++) {
+						if ((x + y) % 2 == 0) {
+							g.setColor(COLOR1);
+						} else {
+							g.setColor(COLOR2);
+						}
+						g.fillRect(x * MainControl.POM_SIZE_W, y * MainControl.POM_SIZE_H, MainControl.POM_SIZE_W, MainControl.POM_SIZE_H);
+					}
+				}
 				control.drawPoms(g);
 			}
 		};
@@ -49,7 +69,7 @@ public class MainPanel {
 		panel.setPreferredSize(dim);
 		panel.setMaximumSize(dim);
 		panel.setMinimumSize(dim);
-		panel.setBorder(new LineBorder(Color.BLUE, 5));
+		border.add(panel);
 	}
 
 	public void init(String budyHost) {
