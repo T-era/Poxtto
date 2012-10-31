@@ -4,6 +4,7 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
+import java.net.InetAddress;
 
 import javax.swing.JComponent;
 import javax.swing.JPanel;
@@ -72,7 +73,7 @@ public class MainPanel {
 		border.add(panel);
 	}
 
-	public void init(String budyHost) {
+	public void init(InetAddress budyHost) {
 		modeManager.init(budyHost);
 	}
 }

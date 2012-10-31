@@ -2,6 +2,7 @@ package ytel.pom.control;
 
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.net.InetAddress;
 
 import ytel.pom.transport.game.GameReady;
 import ytel.pom.transport.game.GameReadyRecieveListener;
@@ -16,16 +17,16 @@ public class ModeManager extends MouseAdapter {
 	public ModeManager(ModeChangedListener listener) {
 		this.listener = listener;
 	}
-	public void init(String budyHost) {
+	public void init(InetAddress budyHost) {
 		this.gameReady = new GameReady(new GameReadyRecieveListener() {
 			@Override
-			public void responseRecievedAction(String hoseName) {
+			public void responseRecievedAction(InetAddress hoseName) {
 			}
 			@Override
 			public void pingTimeoutAction() {
 			}
 			@Override
-			public void BudyReadyRecieveAction(String hostName) {
+			public void BudyReadyRecieveAction(InetAddress hostName) {
 				budyReady();
 			}
 		}, budyHost);

@@ -1,5 +1,7 @@
 package ytel.pom.control;
 
+import java.net.InetAddress;
+
 import ytel.pom.gui.MainForm;
 
 public class MenuControlImpl implements MenuControl {
@@ -16,18 +18,18 @@ public class MenuControlImpl implements MenuControl {
 	}
 
 	@Override
-	public void shakeHandCompleteAction(String hostName) {
-		shakeHandDone(hostName);
+	public void shakeHandCompleteAction(InetAddress host) {
+		shakeHandDone(host);
 	}
 
 	@Override
-	public void responseRecievedAction(String hostName) {
-		shakeHandDone(hostName);
+	public void responseRecievedAction(InetAddress host) {
+		shakeHandDone(host);
 	}
 
-	private void shakeHandDone(String hostName) {
+	private void shakeHandDone(InetAddress host) {
 		mainForm.shakeHandComplete();
-		mainForm.setGameMode(hostName);
+		mainForm.setGameMode(host);
 	}
 
 	@Override

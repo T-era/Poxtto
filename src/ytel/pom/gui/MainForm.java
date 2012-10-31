@@ -1,6 +1,7 @@
 package ytel.pom.gui;
 
 import java.awt.Container;
+import java.net.InetAddress;
 
 import javax.swing.JFrame;
 import javax.swing.JTabbedPane;
@@ -43,7 +44,7 @@ public class MainForm {
 		tab.setEnabledAt(1, false);
 		tab.setSelectedIndex(0);
 	}
-	public void setGameMode(String budyHost) {
+	public void setGameMode(InetAddress budyHost) {
 		tab.setEnabledAt(0, false);
 		tab.setEnabledAt(1, true);
 		tab.setSelectedIndex(1);

@@ -1,6 +1,7 @@
 package ytel.pom.control;
 
 import java.awt.Graphics;
+import java.net.InetAddress;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -28,7 +29,7 @@ public class MainControlImpl implements MainControl {
 	}
 
 	@Override
-	public void init(String budyHost, MainPanel panel) {
+	public void init(InetAddress budyHost, MainPanel panel) {
 		panel.init(budyHost);
 	}
 

@@ -2,6 +2,8 @@ package ytel.pom.gui.connect;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.net.InetAddress;
+import java.net.UnknownHostException;
 
 import javax.swing.JButton;
 import javax.swing.JLabel;
@@ -32,7 +34,12 @@ public class ConnectPanel {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				setWaitingMode(true);
-				sh.put(inputIpHost.getText());
+				try {
+					sh.put(InetAddress.getByName(inputIpHost.getText()));
+				} catch (UnknownHostException e1) {
+					// TODO
+					e1.printStackTrace();
+				}
 			}
 		});
 

@@ -3,6 +3,7 @@ package ytel.pom.transport;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.net.InetAddress;
 import java.net.Socket;
 
 /**
@@ -13,14 +14,14 @@ import java.net.Socket;
  *
  */
 public class Ping implements Runnable {
-	public final String host;
+	public final InetAddress host;
 	public final int port;
 	private final int timeout;
 	private final int message;
 	private final int responseExpect;
 	private final PingResponseListener listener;
 
-	public Ping(String host, int port, int timeout, int message, int responseExpect, PingResponseListener listener) {
+	public Ping(InetAddress host, int port, int timeout, int message, int responseExpect, PingResponseListener listener) {
 		this.host = host;
 		this.port = port;
 		this.message = message;
