@@ -4,13 +4,17 @@ import java.awt.Color;
 import java.awt.Graphics;
 
 import ytel.pom.control.MainControl;
+import ytel.pom.control.MainControl.AllColor;
 
 public class Pom {
-	private final Color c;
+	private final AllColor c;
 	private State state;
-	public Pom(Color c) {
+	public Pom(AllColor c) {
 		this.c = c;
 		this.state = State.Normal;
+	}
+	public AllColor getColor() {
+		return c;
 	}
 
 	public void collapse() {
@@ -44,7 +48,7 @@ public class Pom {
 	private static final int EYE_WHITE = 11;
 	private static final int EYE_BLACK = 7;
 	private void drawImpl(Graphics g, int x, int y) {
-		g.setColor(c);
+		g.setColor(c.getColor());
 		g.fillOval(x, y, MainControl.POM_SIZE_W, MainControl.POM_SIZE_H);
 		int eye1X = x + (MainControl.POM_SIZE_W) / 4;
 		int eye2X = x + (MainControl.POM_SIZE_W) * 3 / 4;

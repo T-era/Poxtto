@@ -126,13 +126,13 @@ public class MainControlImpl implements MainControl {
 		private Pom p2;
 
 		private FallingPair(int x) {
-			int code1 = rnd.nextInt(ALL_COLOR.length);
-			int code2 = rnd.nextInt(ALL_COLOR.length - 1);
-			if (code2 == code1) code2 ++;
+			int code1 = rnd.nextInt(AllColor.values().length);
+			int code2 = rnd.nextInt(AllColor.values().length - 1);
+			if (code2 <= code1) code2 ++;
 
 			this.cordX = x * POM_SIZE_W;
-			this.p1 = new Pom(ALL_COLOR[code1]);
-			this.p2 = new Pom(ALL_COLOR[code2]);
+			this.p1 = new Pom(AllColor.values()[code1]);
+			this.p2 = new Pom(AllColor.values()[code2]);
 		}
 
 		public void MoveLeft() {
