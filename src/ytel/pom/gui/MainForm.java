@@ -6,7 +6,6 @@ import java.net.InetAddress;
 import javax.swing.JFrame;
 import javax.swing.JTabbedPane;
 
-import ytel.pom.control.MainControl;
 import ytel.pom.control.MainControlImpl;
 import ytel.pom.gui.connect.ConnectPanel;
 import ytel.pom.gui.main.MainPanel;
@@ -16,7 +15,7 @@ public class MainForm {
 	private final JTabbedPane tab = new JTabbedPane();
 	private ConnectPanel connectPanel;
 	private MainPanel mainPanel;
-	private MainControl mainControl;
+	private MainControlImpl mainControl;
 
 	public MainForm() {
 //		Init();
@@ -29,7 +28,7 @@ public class MainForm {
 
 		connectPanel = new ConnectPanel(listener);
 		mainControl = new MainControlImpl();
-		mainPanel = new MainPanel(mainControl);
+		mainPanel = new MainPanel(mainControl, mainControl);
 		tab.addTab("接続", connectPanel.panel);
 		tab.addTab("ゲーム", mainPanel.border);
 

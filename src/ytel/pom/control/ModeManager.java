@@ -7,7 +7,6 @@ import java.net.InetAddress;
 import ytel.pom.transport.game.GameReady;
 import ytel.pom.transport.game.GameReadyRecieveListener;
 
-
 public class ModeManager extends MouseAdapter {
 	private final ModeChangedListener listener;
 	private boolean budyReady = false;
@@ -37,7 +36,7 @@ public class ModeManager extends MouseAdapter {
 		synchronized(this) {
 			if (budyReady) {
 				mode = Mode.Going;
-				listener.modeChanged(mode);
+				listener.started();
 			} else {
 				mode = Mode.Wait;
 			}
@@ -48,7 +47,7 @@ public class ModeManager extends MouseAdapter {
 			budyReady = true;
 			if (mode == Mode.Wait) {
 				mode = Mode.Going;
-				listener.modeChanged(mode);
+				listener.started();
 			}
 		}
 	}
@@ -56,14 +55,14 @@ public class ModeManager extends MouseAdapter {
 		synchronized (this) {
 			mode = Mode.Done;
 		}
-		listener.modeChanged(mode);
+		listener.ended();
 	}
 	public void reset() {
 		synchronized (this) {
 			mode = Mode.Init;
 			budyReady = false;
 		}
-		listener.modeChanged(mode);
+		listener.gotReady();
 	}
 	public Mode getMode() {
 		return mode;
@@ -80,5 +79,10 @@ public class ModeManager extends MouseAdapter {
 
 	public static enum Mode {
 		Init, Wait, Going, Done
+	}
+	public static interface ModeChangedListener {
+		void gotReady();
+		void started();
+		void ended();
 	}
 }

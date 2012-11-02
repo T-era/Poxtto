@@ -12,9 +12,8 @@ import javax.swing.border.LineBorder;
 
 import ytel.pom.control.KeyDelegate;
 import ytel.pom.control.MainControl;
-import ytel.pom.control.ModeChangedListener;
 import ytel.pom.control.ModeManager;
-import ytel.pom.control.ModeManager.Mode;
+import ytel.pom.control.ModeManager.ModeChangedListener;
 import ytel.pom.gui.parts.OverlayPanel;
 
 public class MainPanel {
@@ -25,7 +24,7 @@ public class MainPanel {
 	public final JComponent border;
 	public final MainPanelOverlay overlay;
 
-	public MainPanel(final MainControl control) {
+	public MainPanel(final MainControl control, final ModeChangedListener listener) {
 		border = new JPanel(new BorderLayout());
 		border.setBorder(new LineBorder(Color.BLUE, 3));
 
@@ -50,12 +49,7 @@ public class MainPanel {
 				control.drawPoms(g);
 			}
 		};
-		this.modeManager = new ModeManager(new ModeChangedListener() {
-			@Override
-			public void modeChanged(Mode newMode) {
-				panel.repaint();
-			}
-		});
+		this.modeManager = new ModeManager(listener);
 		overlay = new MainPanelOverlay(modeManager);
 		panel.setOverlayDrawing(overlay);
 		panel.setFocusable(true);
@@ -75,5 +69,9 @@ public class MainPanel {
 
 	public void init(InetAddress budyHost) {
 		modeManager.init(budyHost);
+	}
+
+	public void repaint() {
+		panel.repaint();
 	}
 }
