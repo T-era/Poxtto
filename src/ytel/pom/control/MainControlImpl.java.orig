@@ -142,7 +142,7 @@ public class MainControlImpl implements MainControl, ModeChangedListener {
 
 	private class FallingPair {
 		private int cordX;
-		// 中間�Y座�
+		// 中間のY座標
 		private int y = 0;
 		private Pom p1;
 		private Pom p2;
@@ -152,9 +152,15 @@ public class MainControlImpl implements MainControl, ModeChangedListener {
 			int code2 = rnd.nextInt(AllColor.values().length - 1);
 			if (code2 <= code1) code2 ++;
 
+<<<<<<< HEAD
 			this.cordX = x;
+			this.p1 = new Pom(ALL_COLOR[code1]);
+			this.p2 = new Pom(ALL_COLOR[code2]);
+=======
+			this.cordX = x * POM_SIZE_W;
 			this.p1 = new Pom(AllColor.values()[code1]);
 			this.p2 = new Pom(AllColor.values()[code2]);
+>>>>>>> 4f43a87d062da6b7d1f0ee503acc68383173e70b
 		}
 
 		public void MoveLeft() {

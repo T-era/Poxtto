@@ -12,7 +12,18 @@ public interface MainControl {
 	public static final int HEIGHT = 12;
 	public static final int POM_SIZE_W = 30;
 	public static final int POM_SIZE_H = 25;
-	public static final Color[] ALL_COLOR = { Color.BLUE, Color.RED, Color.YELLOW, Color.GREEN };
+	public enum AllColor {
+		BLUE(Color.BLUE),
+		RED(Color.RED),
+		YELLOW(Color.YELLOW),
+		GREEN (Color.GREEN);
+	
+		private final Color c;
+		private AllColor(Color c) {
+			this.c = c;
+		}
+		public Color getColor() { return c; }
+	};
 
 	void init(InetAddress budyHost, MainPanel panel);
 	void moveRight();
