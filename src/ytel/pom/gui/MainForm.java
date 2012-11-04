@@ -7,6 +7,7 @@ import javax.swing.JFrame;
 import javax.swing.JTabbedPane;
 
 import ytel.pom.control.MainControlImpl;
+import ytel.pom.control.ModeManager;
 import ytel.pom.gui.connect.ConnectPanel;
 import ytel.pom.gui.main.MainPanel;
 import ytel.pom.transport.menu.ShakeHandCompleteListener;
@@ -28,7 +29,9 @@ public class MainForm {
 
 		connectPanel = new ConnectPanel(listener);
 		mainControl = new MainControlImpl();
-		mainPanel = new MainPanel(mainControl, mainControl);
+		ModeManager modeManager = new ModeManager(mainControl);
+		mainControl.setModeManager(modeManager);
+		mainPanel = new MainPanel(mainControl, modeManager);
 		tab.addTab("接続", connectPanel.panel);
 		tab.addTab("ゲーム", mainPanel.border);
 

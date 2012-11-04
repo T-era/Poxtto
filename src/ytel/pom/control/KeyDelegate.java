@@ -17,6 +17,10 @@ public class KeyDelegate implements KeyListener {
 	@Override
 	public void keyPressed(KeyEvent e) {
 		int keyCode = e.getKeyCode();
+		if (keyCode == KeyEvent.VK_SHIFT) {
+			shiftPushed = true;
+		}
+
 		if (keyCode == KeyEvent.VK_RIGHT) main.moveRight();
 		else if (keyCode == KeyEvent.VK_LEFT) main.moveLeft();
 		else if (keyCode == KeyEvent.VK_DOWN) main.moveDown();
@@ -28,6 +32,12 @@ public class KeyDelegate implements KeyListener {
 
 	@Override
 	public void keyReleased(KeyEvent e) {
-		if (e.getKeyCode() == KeyEvent.VK_SHIFT) shiftPushed = false;
+		if (e.getKeyCode() == KeyEvent.VK_SHIFT) {
+			shiftPushed = false;
+		}
+	}
+
+	public boolean isShiftPushed() {
+		return shiftPushed;
 	}
 }

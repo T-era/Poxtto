@@ -3,21 +3,23 @@ package ytel.pom.gui.main;
 import java.awt.Dimension;
 import java.awt.Graphics;
 
+import ytel.pom.control.KeyDelegate;
 import ytel.pom.control.ModeManager;
 import ytel.pom.gui.parts.OverlayDrawing;
 
 public class MainPanelOverlay implements OverlayDrawing {
 	public final ModeManager mode;
+	private final KeyDelegate key;
 	private final OverlayDrawing startView;
 	private final OverlayDrawing doneView;
 	private final OverlayDrawing shiftView;
-	private boolean shiftPushed;
 
-	public MainPanelOverlay(ModeManager mode) {
+	public MainPanelOverlay(ModeManager mode, KeyDelegate key) {
 		this.mode = mode;
+		this.key = key;
 		startView  = new StartView();
-		doneView = null;
-		shiftView = null;
+		doneView = new GameOverView();
+		shiftView = new SpecialModeOverlay();
 	}
 	@Override
 	public void paintOverlay(Graphics g, Dimension size) {
@@ -27,7 +29,7 @@ public class MainPanelOverlay implements OverlayDrawing {
 			startView.paintOverlay(g, size);
 			return;
 		case Going:
-			if (shiftPushed)
+			if (key.isShiftPushed())
 				shiftView.paintOverlay(g, size);
 			return;
 		case Done:
@@ -35,9 +37,6 @@ public class MainPanelOverlay implements OverlayDrawing {
 		}
 	}
 
-	public void shift(boolean pushed){
-		shiftPushed = pushed;
-	}
 	public void startClick() {
 		mode.start();
 	}

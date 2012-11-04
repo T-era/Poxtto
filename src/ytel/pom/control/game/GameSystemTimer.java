@@ -7,12 +7,17 @@ import ytel.pom.control.MainControl;
 
 public class GameSystemTimer {
 	private final MainControl control;
+	private final Timer timer;
 
 	public GameSystemTimer(MainControl control) {
 		this.control = control;
+		this.timer = new Timer();
 	}
 	public void start() {
-		new Timer().scheduleAtFixedRate(new PrivateTask(), 0, 5);
+		timer.scheduleAtFixedRate(new PrivateTask(), 0, 50);
+	}
+	public void stop() {
+		timer.cancel();
 	}
 
 	private class PrivateTask extends TimerTask {

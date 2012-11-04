@@ -8,13 +8,14 @@ import ytel.pom.gui.main.MainPanel;
 import ytel.pom.model.Damage;
 
 public interface MainControl {
+	public static final int FALL_STEP = 3;
 	public static final int WIDTH = 7;
 	public static final int HEIGHT = 12;
 	public static final int POM_SIZE_W = 30;
 	public static final int POM_SIZE_H = 25;
 	public enum AllColor {
-		BLUE(Color.BLUE),
-		RED(Color.RED),
+		BLUE(new Color(32, 96, 255)),
+		RED(new Color(255, 64, 64)),
 		YELLOW(Color.YELLOW),
 		GREEN (Color.GREEN);
 	

@@ -1,15 +1,16 @@
 package ytel.pom.control;
 
-import java.util.ArrayList;
 import java.util.List;
 
+import ytel.pom.control.game.erase.EraseAnimation;
+import ytel.pom.control.game.erase.GroupEraser;
 import ytel.pom.gui.main.Pom;
 import ytel.pom.model.Damage;
 
 public class MainControlEvent {
 	private final Pom[][] poms;
 	private final List<Damage> list;
-	private EraseHelper eraseHelper = null;
+	private EraseAnimation eraser = null;
 
 	public MainControlEvent(Pom[][] poms, List<Damage> list) {
 		this.poms = poms;
@@ -17,32 +18,20 @@ public class MainControlEvent {
 	}
 
 	public boolean next() {
-		if (eraseHelper == null) {
-			eraseHelper = new EraseHelper();
-		} else if (! eraseHelper.done) {
-			eraseHelper.doIt();
-		} else {
-			// ダメージ送受信
-		}
-		// 終了判定
-
-		return true;
-	}
-
-	private class EraseHelper {
-		private boolean done = false;
-		private int count = 0;
-		private List<Pom> erased = new ArrayList<Pom>();
-		/**
-		 * 消去のためのマークアップをします。
-		 */
-		public EraseHelper() {
-			// TODO 消去
-		}
-		public void doIt() {
-			if (++count == 5) {
-				done = true;
+		if (eraser == null) {
+			eraser = new GroupEraser(poms).erase();
+			if (eraser == null) {
+				// 終了
+				return true;
 			}
+		} else if (eraser.done) {
+			// ダメージ送受信
+			eraser = null;
+		} else {
+			eraser.doIt();
 		}
+
+		// 継続
+		return false;
 	}
 }
