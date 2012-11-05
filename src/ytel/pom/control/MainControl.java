@@ -16,8 +16,8 @@ public interface MainControl {
 	public enum AllColor {
 		BLUE(new Color(32, 96, 255)),
 		RED(new Color(255, 64, 64)),
-		YELLOW(Color.YELLOW),
-		GREEN (Color.GREEN);
+		YELLOW(new Color(224, 224, 0)),
+		GREEN (new Color(0, 192, 0));
 	
 		private final Color c;
 		private AllColor(Color c) {
