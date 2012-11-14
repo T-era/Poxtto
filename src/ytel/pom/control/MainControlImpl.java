@@ -142,7 +142,7 @@ public class MainControlImpl implements MainControl, ModeChangedListener {
 	private void eventOccur() {
 		List<Damage> list;
 		synchronized(damages) {
-			list = new ArrayList<Damage>();
+			list = new ArrayList<Damage>(damages);
 			damages.clear();
 		}
 		eventOn = new MainControlEvent(poms, list);

@@ -55,6 +55,7 @@ public class GroupEraser {
 						}
 					} else if (isSameLeft(x, y, thisColor)) {
 						PomGroup group = groupMap[y][x-1];
+						if (group == null) throw new RuntimeException(showMaps(groupMap, map));
 						group.add(thisOne, x, y);
 						groupMap[y][x] = group;
 					} else if (isSameBottom(x, y, thisColor)) {
@@ -78,6 +79,23 @@ public class GroupEraser {
 		}
 		return ret;
 	}
+private String showMaps(PomGroup[][] g, Pom[][] m) {
+	StringBuilder sb = new StringBuilder();
+	sb.append(toString(g));
+	sb.append("\n");
+	sb.append(toString(m));
+	return new String(sb);
+}
+private static <T> String toString(T[][] a) {
+	StringBuilder sb = new StringBuilder();
+	for (int i = 0; i < a.length; i ++) {
+		for (int j = 0; j < a[i].length; j ++) {
+			sb.append(a[i][j]);
+		}
+		sb.append("\n");
+	}
+	return new String(sb);
+}
 
 	private static class PomGroup {
 		private final List<PomXY> members;
@@ -97,6 +115,10 @@ public class GroupEraser {
 		}
 		public int size() {
 			return members.size();
+		}
+		@Override
+		public String toString() {
+			return color.toString();
 		}
 	}
 }

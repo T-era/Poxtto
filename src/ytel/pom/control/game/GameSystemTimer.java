@@ -14,7 +14,7 @@ public class GameSystemTimer {
 		this.timer = new Timer();
 	}
 	public void start() {
-		timer.scheduleAtFixedRate(new PrivateTask(), 0, 50);
+		timer.schedule(new PrivateTask(), 0, 50);
 	}
 	public void stop() {
 		timer.cancel();

@@ -43,7 +43,7 @@ public class Pom {
 		} else if (state == ERASING2) {
 			state = ERASING3;
 		} else {
-			throw new RuntimeException();
+			throw new RuntimeException(state.toString());
 		}
 	}
 	public boolean fall(boolean continueFalling) {
@@ -105,5 +105,10 @@ public class Pom {
 	}
 	public int cordToDrawY(int cordY) {
 		return ((MainControl.HEIGHT-1) - cordY) * MainControl.POM_SIZE_H;
+	}
+
+	@Override
+	public String toString() {
+		return c.toString();
 	}
 }
