@@ -23,9 +23,10 @@ public class EraseChecker {
 
 	public void checkAdd(int x, int y1, int y2) {
 		if (groups == null) groups = GroupingStructer.createForPile(field);
-
-		groups.addPom(x, y1, field.at(x, y1));
-		groups.addPom(x, y2, field.at(x, y2));
+		else {
+			groups.addPom(x, y1, field.at(x, y1));
+			groups.addPom(x, y2, field.at(x, y2));
+		}
 	}
 
 	private Set<PomXY> groupToXY(List<PomGroup> group) {

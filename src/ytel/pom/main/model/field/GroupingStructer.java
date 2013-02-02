@@ -122,9 +122,23 @@ public class GroupingStructer {
 			PomGroup thisGroup;
 			PomColor thisColor = thisOne.color;
 			if (isSameLeft(x, y, thisColor)
-					&& isSameBottom(x, y, thisColor)) {
+					&& isSameBottom(x, y, thisColor)
+					&& isSameRight(x, y, thisColor)) {
 				thisGroup = left;
 				thisGroup.merge(bottom);
+				thisGroup.merge(right);
+			} else if (isSameLeft(x, y, thisColor)
+						&& isSameBottom(x, y, thisColor)) {
+				thisGroup = left;
+				thisGroup.merge(bottom);
+			} else if (isSameLeft(x, y, thisColor)
+					&& isSameRight(x, y, thisColor)) {
+				thisGroup = left;
+				thisGroup.merge(right);
+			} else if (isSameBottom(x, y, thisColor)
+						&& isSameRight(x, y, thisColor)) {
+				thisGroup = bottom;
+				thisGroup.merge(right);
 			} else if (isSameLeft(x, y, thisColor)) {
 				thisGroup = left;
 			} else if (isSameBottom(x, y, thisColor)) {

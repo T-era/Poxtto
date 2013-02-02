@@ -16,6 +16,11 @@ public class PomGroup {
 	}
 	public void add(Pom pom, int cordX, int cordY) {
 		if (pom.color != this.color) throw new IllegalArgumentException();
+for (PomXY mem : members.list) {
+	if (mem.cordX == cordX && mem.cordY == cordY) {
+		System.out.println("D" + cordX + ", " + cordY);
+	}
+}	
 		members.add(new PomXY(pom, cordX, cordY));
 	}
 	public void merge(PomGroup anotherGroup) {
