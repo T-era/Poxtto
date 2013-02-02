@@ -10,29 +10,29 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * BorderLayout �̎菕�������܂��B
- * ���̃N���X�C���X�^���X�́A���C�A�E�g�����R���|�[�l���g�����󂯂��A{@link BorderLayoutBuilder#layoutComponent(Container)}
- * ���\�b�h�ŁA�R���e�i�̎w�肳�ꂽ�ꏊ�Ƀ��C�A�E�g���܂��B
+ * BorderLayout の手助けをします。
+ * このクラスインスタンスは、レイアウトされるコンポーネントを仮受けし、{@link BorderLayoutBuilder#layoutComponent(Container)}
+ * メソッドで、コンテナの指定された場所にレイアウトします。
  * <p>
- * {@link #add(Component, boolean, Direction...)}�ŃR���|�[�l���g��ǉ����܂��B
+ * {@link #add(Component, boolean, Direction...)}でコンポーネントを追加します。
  * <br/>
- * Direction�Ń��C�A�E�g�ʒu���w�肵�܂��B
- * �ʒu�w��́A�擪���珇�ɓK�p����܂��B
+ * Directionでレイアウト位置を指定します。
+ * 位置指定は、先頭から順に適用されます。
  * <example>add(arg, false, Direction.South, Direction.East)</example>
- * �̎w��̏ꍇ�A���C���R���e�i��South�R���e�i�����A����South�R���e�i��East�R���e�i�����������
- * �R���|�[�l���g�͔z�u����܂��B
+ * の指定の場合、メインコンテナのSouthコンテナを作り、そのSouthコンテナにEastコンテナを作った中に
+ * コンポーネントは配置されます。
  * </p>
  * <p>
- * ����ӏ��ɕ����̃R���|�[�l���g���w�肵���ꍇ�AGridLayout�ŏc���܂��́A�����ɕ��ׂĔz�u����܂��B
- * ���̎w��́A{@link #add(Component, boolean, Direction...)}�̑������Ŏw�肵�܂��B�ȗ����ꂽ�ꍇ��false�ł��B
+ * 同一箇所に複数のコンポーネントを指定した場合、GridLayoutで縦一列または、横一列に並べて配置されます。
+ * この指定は、{@link #add(Component, boolean, Direction...)}の第二引数で指定します。省略された場合はfalseです。
  * <example>add(arg1, true, Direction.South); add(arg2, true, Direction.South)</example>
- * �̏ꍇ�Aarg1��arg2�͏c���ł��B(false�̏ꍇ�͉����ł�)
+ * の場合、arg1とarg2は縦一列です。(falseの場合は横一列です)
  * <br/><br/>
- * �w��͏�ɏ㏑����������܂��B�܂�A�ŏI�I�ɓK�p�����̂́A���̏ꏊ�ɍŌ��add��������boolean�l�ł��B
+ * 指定は常に上書き処理されます。つまり、最終的に適用されるのは、その場所に最後にaddした時のboolean値です。
  * <remarks>
- * boolean�l���ȗ����ꂽ�Ƃ��ɂ́A���w��̈����ł͂Ȃ��A<strong>�ÖٓI��false�w��</strong>���Ƃ������Ƃɗ��ӂ��Ă��������B<br/>
- * ���Ƃ��΁A�c1���3�̃{�^�������񂾃A�v���P�[�V�����ɁA4�ڂ̃{�^����ǉ��������Ƃ��܂��B
- * ���̂Ƃ��ɁA4�ڂ�add��boolean���ȗ����Ă��܂��Ɖ�1��ɕ\�������Ƃ������Ƃł��B
+ * boolean値が省略されたときには、無指定の扱いではなく、<strong>暗黙的にfalse指定</strong>だということに留意してください。<br/>
+ * たとえば、縦1列に3つのボタンが並んだアプリケーションに、4つ目のボタンを追加したいとします。
+ * このときに、4つ目のaddでbooleanを省略してしまうと横1列に表示されるということです。
  * </remarks>
  * </p>
  * @author 22677478
@@ -77,10 +77,10 @@ public class BorderLayoutBuilder {
 		this.componentMap = new HashMap<BorderLayoutBuilder.Direction, BorderLayoutBuilder>();
 	}
 	/**
-	 * CENTER�Ƀ��C�A�E�g�����R���|�[�l���g�����p���ŃC���X�^���X�𐶐����܂��B
-	 * ���C�A�E�g�����ŊK�w���[���Ȃ����ꍇ�̂��߂̃R���X�g���N�^�ł��B
-	 * ���C�A�E�g�����ŊK�w���[���Ȃ����ꍇ�A���̊K�w�ɕ\�������͂��������R���|�[�l���g�́A�V���ȊK�w��CENTER��
-	 * �ێ�����܂��B
+	 * CENTERにレイアウトされるコンポーネントを引継いでインスタンスを生成します。
+	 * レイアウト処理で階層が深くなった場合のためのコンストラクタです。
+	 * レイアウト処理で階層が深くなった場合、元の階層に表示されるはずだったコンポーネントは、新たな階層でCENTERに
+	 * 保持されます。
 	 * @param content
 	 */
 	protected BorderLayoutBuilder(List<Component> content) {
@@ -89,25 +89,25 @@ public class BorderLayoutBuilder {
 	}
 
 	/**
-	 * ���C�A�E�g����R���|�[�l���g��ǉ����܂��B
-	 * ���C�A�E�g�����ꏊ�́A{@link Direction}�񋓑̂̉ϒ������Ŏw�肵�܂��B
-	 * Direction���ȗ������ꍇ�́ACENTER�ɔz�u����܂��B
+	 * レイアウトするコンポーネントを追加します。
+	 * レイアウトされる場所は、{@link Direction}列挙体の可変長引数で指定します。
+	 * Directionを省略した場合は、CENTERに配置されます。
 	 *
-	 * ���ꃌ�C���ɕ����̃R���|�[�l���g���z�u���ꂽ�ꍇ�̕��ѕ��́A���ł��B
-	 * @param arg ���C�A�E�g����R���|�[�l���g
-	 * @param directions �z�u�ʒu�B�擪���珇�ɓK�p����܂��B
+	 * 同一レイヤに複数のコンポーネントが配置された場合の並び方は、横です。
+	 * @param arg レイアウトするコンポーネント
+	 * @param directions 配置位置。先頭から順に適用されます。
 	 */
 	public void add(Component arg, Direction... directions) {
 		add(arg, false, directions);
 	}
 	/**
-	 * ���C�A�E�g����R���|�[�l���g��ǉ����܂��B
-	 * ���ꃌ�C���ɕ����̃R���|�[�l���g���z�u���ꂽ�ꍇ�̕��ѕ�(�c/��)�𖾊m�Ɏw�肵�܂��B
+	 * レイアウトするコンポーネントを追加します。
+	 * 同一レイヤに複数のコンポーネントが配置された場合の並び方(縦/横)を明確に指定します。
 	 *
-	 * ���C�A�E�g�����ꏊ�́A{@link Direction}�񋓑̂̉ϒ������Ŏw�肵�܂��B
-	 * Direction���ȗ������ꍇ�́ACENTER�ɔz�u����܂��B
-	 * @param arg ���C�A�E�g����R���|�[�l���g
-	 * @param directions �z�u�ʒu�B�擪���珇�ɓK�p����܂��B
+	 * レイアウトされる場所は、{@link Direction}列挙体の可変長引数で指定します。
+	 * Directionを省略した場合は、CENTERに配置されます。
+	 * @param arg レイアウトするコンポーネント
+	 * @param directions 配置位置。先頭から順に適用されます。
 	 */
 	public void add(Component arg, boolean orientationHorizonal, Direction... directions) {
 		if (directions.length == 0) {
@@ -137,7 +137,7 @@ public class BorderLayoutBuilder {
 	}
 
 	/**
-	 * ���̃I�u�W�F�N�g�Ǘ����̃R���|�[�l���g���A�w�肳�ꂽ�R���e�i�Ƀ��C�A�E�g���܂��B
+	 * このオブジェクト管理下のコンポーネントを、指定されたコンテナにレイアウトします。
 	 * @param container
 	 */
 	public void layoutComponent(Container container) {
