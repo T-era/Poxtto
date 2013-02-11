@@ -36,31 +36,31 @@ public class NextPomGenerator {
 	}
 
 	private class Generator {
- 	private final int center;
-	private final PomField field;
-	private final Queue<FallingPair> next = new LinkedList<FallingPair>();
-
-	public Generator(int queueSize, int center, PomField field) {
-		this.center = center;
-		this.field = field;
-
-		for (int i = 0; i < queueSize; i ++) {
+	 	private final int center;
+		private final PomField field;
+		private final Queue<FallingPair> next = new LinkedList<FallingPair>();
+	
+		public Generator(int queueSize, int center, PomField field) {
+			this.center = center;
+			this.field = field;
+	
+			for (int i = 0; i < queueSize; i ++) {
+				next.add(new FallingPair(center, MainContext.RANDOM, field));
+			}
+		}
+	
+		public FallingPair poll() {
+			FallingPair p = next.poll();
 			next.add(new FallingPair(center, MainContext.RANDOM, field));
+			return p;
 		}
-	}
-
-	public FallingPair poll() {
-		FallingPair p = next.poll();
-		next.add(new FallingPair(center, MainContext.RANDOM, field));
-		return p;
-	}
-
-	public void drawAll(Graphics g) {
-		int i = 0;
-		for (FallingPair pair : next) {
-			pair.drawPairInLeft(g, i * (MainContext.POM_SIZE_H * 2 + 3));
-			i++;
+	
+		public void drawAll(Graphics g) {
+			int i = 0;
+			for (FallingPair pair : next) {
+				pair.drawPairInLeft(g, i * (MainContext.POM_SIZE_H * 2 + 3));
+				i++;
+			}
 		}
-	}
 	}
 }

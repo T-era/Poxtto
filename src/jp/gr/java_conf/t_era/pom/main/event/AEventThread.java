@@ -23,6 +23,9 @@ public class AEventThread {
 	boolean isDone = false;
 
 	private int chain = 0;
+	private int[] chainBonus = {
+			1, 3, 5, 15
+	}; // TODO Chain bonus
 
 	AEventThread(PomField field, DamageStock damageStock, EraseChecker checker, ScoreView scoreKeeper) {
 		this.field = field;
@@ -65,12 +68,21 @@ public class AEventThread {
 				set = field.getUnder(Damage.scoreToLine(score));
 			}
 		} else {
-			scoreKeeper.addScore(set.size() * 10 * (chain + 1)); // TODO Chain bonus
+			int bonus = getChainBonus();
+			scoreKeeper.addScore(set.size() * bonus * (chain + 1));
 			chain ++;
 		}
 
 		return new EraseAnimation(field, set);
 	}
+	private int getChainBonus() {
+		if (chain >= chainBonus.length) {
+			return chainBonus[chainBonus.length - 1];
+		} else {
+			return chainBonus[chain];
+		}
+	}
+
 	private RiseAnimation createRiseAnimation() {
 		List<Damage> list = damageStock.flush();
 		if (list.size() == 0) {
@@ -80,7 +92,11 @@ public class AEventThread {
 			for (Damage dmg : list) {
 				lines += dmg.getLine();
 			}
-			return new RiseAnimation(field, checker, lines);
+			if (lines > 0) {
+				return new RiseAnimation(field, checker, lines);
+			} else {
+				return null;
+			}
 		}
 	}
 }
